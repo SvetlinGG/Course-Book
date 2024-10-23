@@ -8,7 +8,7 @@
                     "console": "integratedTerminal",
                     "internalConsoleOptions": "neverOpen",
                     "name": "Debugging",
-                    "program": "${workspaceFolder}/src/index.js",
+                    "program": "${workspaceFolder}/index.js",
                     "request": "launch",
                     "restart": true,
                     "runtimeExecutable": "nodemon",
