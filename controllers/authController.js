@@ -20,7 +20,10 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     const loginData = req.body;
 
-    await authService.login(loginData)
+    const token = await authService.login(loginData);
+
+    res.cookie('auth', token);
+    res.redirect('/');
 })
 
 

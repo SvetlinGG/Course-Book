@@ -3,13 +3,14 @@ const jwt = require('../lib/jsonwebtoken.js');
  
 
 const User = require('../models/User');
+const SECRET = '$2b$12$bogtWUuWWSRmfGmdpM3lleEzOk01WXHxvDkC8M8QHgCEOy6z7';
 
 
 exports.register = async(userData) => {
     if(userData.password !== userData.rePassword){
         throw new Error('Username or password is invalid');
     }
-    const user = await User.find({email: userData.email});
+    const user = await User.findOne({email: userData.email});
     if (user){
         throw new Error('User already exists');
     }
@@ -32,5 +33,13 @@ exports.login = async (email, password) => {
             throw new Error('Username or password is invalid');
         }
 
-        await jwt.sign();
+        const payload = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+        }
+
+        const token = await  jwt.sign(payload, SECRET, {expiresIn: '2h'});
+
+        return token;
 }
