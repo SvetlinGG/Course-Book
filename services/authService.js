@@ -3,8 +3,7 @@ const jwt = require('../lib/jsonwebtoken.js');
  
 
 const User = require('../models/User');
-const SECRET = '$2b$12$bogtWUuWWSRmfGmdpM3lleEzOk01WXHxvDkC8M8QHgCEOy6z7';
-
+const {SECRET} = require('../config');
 
 exports.register = async(userData) => {
     if(userData.password !== userData.rePassword){
