@@ -16,7 +16,11 @@ exports.register = async(userData) => {
     }
 
 
-    return User.create(userData);
+    const createdUser = await  User.create(userData);
+
+    const token = await generateToken(createdUser);
+
+    return token;
 } 
 
 exports.login = async (email, password) => {
@@ -33,13 +37,20 @@ exports.login = async (email, password) => {
             throw new Error('Username or password is invalid');
         }
 
-        const payload = {
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-        }
-
-        const token = await  jwt.sign(payload, SECRET, {expiresIn: '2h'});
+        
+        const token = await  generateToken(user);
 
         return token;
+}
+
+ function generateToken(user){
+    const payload = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+    }
+
+   return jwt.sign(payload, SECRET, {expiresIn: '2h'});
+
+    
 }
