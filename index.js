@@ -17,9 +17,10 @@ app.set('view engine', 'hbs');
 
 app.use(routes);
 
-mongoose.connect('mongodb://localhost:27017/course-book');
+mongoose.connect('mongodb://localhost:27017');
 
-mongoose.connection.on('connected', () => console.log('DB is connected'))
+mongoose.connection.on('connected', () => console.log('DB is connected'));
+mongoose.connection.on('error', (err) => console.log('Error connection'));
 
 
 app.listen(1000, () => console.log('Server is listen on http://localhost:1000'));
